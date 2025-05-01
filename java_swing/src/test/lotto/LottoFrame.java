@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 
 public class LottoFrame extends JFrame implements ActionListener {
 
-    private static final String INITIAL_MESSAGE ="로또 번호 클릭";
-    private static String FONT_NAME = "고딕";
+    private static final String INITIAL_MESSAGE = "로또 번호 클릭";
+    private static final String FONT_NAME = "고딕";
     private static final int FONT_SIZE = 20;
 
     private JButton button;
@@ -16,44 +16,50 @@ public class LottoFrame extends JFrame implements ActionListener {
     private boolean isInitialState = true;
     private int[] currentNumbers;
 
-    public LottoFrame(){
+    public LottoFrame() {
         initData();
         setInitLayout();
         addEventListener();
     }
-    private void initData(){
+
+    private void initData() {
         setTitle("lotto game");
-        setSize(600,400);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         button = new JButton("game start");
         lottoRandomNumber = new LottoRandomNumber();
+        currentNumbers = new int[LottoRandomNumber.LOTTO_NUMBER_COUNT];
+
 
     }
-    private void setInitLayout(){
+
+    private void setInitLayout() {
         setLayout(new BorderLayout());
-        add(button,BorderLayout.NORTH);
+        add(button, BorderLayout.NORTH);
         setVisible(true);
     }
-    private void addEventListener(){
+
+    private void addEventListener() {
         button.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        isInitialState =false;
-        currentNumbers = lottoRandomNumber.createNUmber;
+        isInitialState = false;
+        currentNumbers = lottoRandomNumber.createNumber();
 
+        repaint();
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setFont(new Font(FONT_NAME,Font.BOLD,FONT_SIZE));
-        if(isInitialState){
-            g.drawString(INITIAL_MESSAGE,230,200);
-        }else{
-            for(int i=0; i<currentNumbers.length; i++){
-                g.drawString(currentNumbers[i] + "",100 + (i *50), 300);
+        g.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
+        if (isInitialState) {
+            g.drawString(INITIAL_MESSAGE, 230, 200);
+        } else {
+            for (int i = 0; i < currentNumbers.length; i++) {
+                g.drawString(currentNumbers[i] + "", 100 + (i * 50), 300);
             }
         }
     }
