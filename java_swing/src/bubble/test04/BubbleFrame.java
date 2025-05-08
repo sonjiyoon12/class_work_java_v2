@@ -1,4 +1,4 @@
-package bubble.test03;
+package bubble.test04;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -51,7 +51,7 @@ public class BubbleFrame extends JFrame {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        if (!player.isLeft() && !player.isLeftWallCrash()) {
+                        if (player.isLeft() == false && player.isLeftWallCrash() == false) {
                             player.left();
                         }
                         break;
@@ -81,8 +81,10 @@ public class BubbleFrame extends JFrame {
                         player.setRight(false);
                         break;
                     case KeyEvent.VK_UP:
-
                         break;
+                    case KeyEvent.VK_SPACE:
+                        add(new Bubble(player));
+                         break;
                 }
             }
         });

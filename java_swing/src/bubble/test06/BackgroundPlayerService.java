@@ -1,4 +1,4 @@
-package bubble.test05;
+package bubble.test06;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -36,13 +36,32 @@ public class BackgroundPlayerService implements Runnable {
             Color leftColor = new Color(image.getRGB(player.getX(), player.getY() + 25));
             // 플레이어 좌표에 보정 값 추가
             Color rightColor = new Color(image.getRGB(player.getX() + 60, player.getY() + 25));
+
+            // 바닥 감지 기능 개발
+            // 하얀색(255, 255, 255, 255)는 --> image.getRGB() --> 16진수 정수값을 반환 -1이 하얀색
+            int bottomColorLeft = image.getRGB(player.getX() + 20, player.getY() + 55);
+            System.out.println("bottomColorLeft : " + bottomColorLeft);
+            int bottomColorRight = image.getRGB(player.getX() + 50, player.getY() + 55);
+
+            if (bottomColorLeft + bottomColorRight != -2) {
+                // 여기서 멈추어야 한다. (바닥이야)
+                // -1 이라면 바닥으로 떨어져야 하고 -1 아니라면 멈춰야한다.
+                // 멈추는 경우의 수는 (빨간색, 파란색 이거나)
+                player.setDown(false);
+            } else {
+                // 쪼~끔 점프하는 순간 bottomColor 값이 -1, -1 (-2) 되기 때문에
+                // 바로 player.down() 메서드가 호출 되어 버린다.
+                if (player.isUp() == false && player.isDown() == false) {
+                    player.down();
+                }
+            }
+
             // 플레이어의 좌표 값에 따라서 빨간색, 파란색, 하얀색을 구분 할 수 있다.
             //System.out.println("왼쪽확인 : " + leftColor);
             //System.out.println("오른쪽확인 : " + rightColor);
-
             // leftColor - 논리적으로 255, 0, 0 이면 왼쪽벽에 충돌함으로 판단.
             // rightColor - 논리적으로 255, 0, 0 이면 오른쪽벽에 충돌함으로 판단.
-
+            // 왼쪽, 오른쪽 벽 감지 기능
             if (leftColor.getRed() == 255 && leftColor.getGreen() == 0 && leftColor.getBlue() == 0) {
                 //빨간색으로 판별 --> 왼쪽 벽에 충돌 상태
                 System.out.println("왼쪽벽에 충돌");

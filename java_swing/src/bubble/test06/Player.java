@@ -1,4 +1,4 @@
-package bubble.test05;
+package bubble.test06;
 
 import javax.swing.*;
 
@@ -224,7 +224,7 @@ public class Player extends JLabel implements Moveable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 130 / JUMP_SPEED; i++) {
+                while (down) {
                     y = y + JUMP_SPEED;
                     setLocation(x, y);
                     try {
@@ -232,8 +232,8 @@ public class Player extends JLabel implements Moveable {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                } // end of for
-                down = false;
+                } // end of while
+                down = false; // 상태값을 확실하게 처리하자.
             }
         }).start();
     }

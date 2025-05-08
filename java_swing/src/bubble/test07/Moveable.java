@@ -1,4 +1,4 @@
-package bubble.test06;
+package bubble.test07;
 
 public interface Moveable {
     // 추상메서드 public abstract 생략 가능

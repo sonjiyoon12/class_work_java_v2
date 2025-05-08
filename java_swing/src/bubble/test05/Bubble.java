@@ -1,8 +1,8 @@
-package bubble.test04;
+package bubble.test05;
 
 import javax.swing.*;
 
-public class Bubble extends JLabel {
+public class Bubble extends JLabel implements Moveable {
 
     private int x;
     private int y;
@@ -11,6 +11,8 @@ public class Bubble extends JLabel {
     private boolean left;
     private boolean right;
     private boolean up;
+
+    private boolean isLeft; // true, false
 
     private ImageIcon bubble; // 기본 물방울
 
@@ -21,6 +23,21 @@ public class Bubble extends JLabel {
         this.player = player;
         initData();
         setInitLayout();
+        // 버블은 스레드가 하나면 된다.
+        bubbleStartThread();
+    }
+
+    private void bubbleStartThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (player.getPlayerWay() == PlayerWay.LEFT) {
+                    left();
+                } else {
+                    right();
+                }
+            }
+        }).start();
     }
 
     private void initData() {
@@ -96,5 +113,49 @@ public class Bubble extends JLabel {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    @Override
+    public void left() {
+        left = true;
+        for (int i = 0; i < 400; i++) {
+            x--;
+            setLocation(x, y);
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        up();
+    }
+
+    @Override
+    public void right() {
+        right = true;
+        for (int i = 0; i < 400; i++) {
+            x++;
+            setLocation(x, y);
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        up();
+    }
+
+    @Override
+    public void up() {
+        up = true;
+        while (true) {
+            y--;
+            setLocation(x, y);
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

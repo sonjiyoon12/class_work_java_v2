@@ -1,4 +1,4 @@
-package bubble.test07;
+package _my_bubble.test05;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -64,10 +64,10 @@ public class BubbleFrame extends JFrame {
                         }
                         break;
                     case KeyEvent.VK_UP:
-                        if (player.isUp() == false && player.isDown() == false) {
-                            player.up();
-                        }
+                        player.up();
                         break;
+                    case KeyEvent.VK_SPACE:
+
                 }
             }
 

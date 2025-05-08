@@ -1,53 +1,44 @@
-package bubble.test07;
+package _my_bubble.test05;
 
 import javax.swing.*;
 
-public class Bubble extends JLabel implements Moveable {
-
+public class Bubble extends JLabel implements Moveable{
     private int x;
     private int y;
 
-    // 물방울 움직임 상태
     private boolean left;
     private boolean right;
     private boolean up;
 
-    private boolean isLeft; // true, false
+    private boolean isLeft;
 
-    private ImageIcon bubble; // 기본 물방울
-    private ImageIcon bomb; // 물방울이 터진 상태
+    private ImageIcon bubble;
 
     private Player player;
 
-    private BackgroundBubbleService backgroundBubbleService;
-
-    // 생성자를 통해서 player 객체의 주소값을 주입 받기 -> 생성자 의존 주입
     public Bubble(Player player) {
         this.player = player;
-        this.backgroundBubbleService = new BackgroundBubbleService(this);
-
         initData();
         setInitLayout();
-        // 버블은 스레드가 하나면 된다.
-        bubbleStartThread();
+        bubleStartThread();
     }
 
-    private void bubbleStartThread() {
+    private void bubleStartThread() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (player.getPlayerWay() == PlayerWay.LEFT) {
+                if(player.getPlayerWay() == PlayerWay.LEFT){
                     left();
-                } else {
+                }else{
                     right();
                 }
             }
         }).start();
     }
 
+
     private void initData() {
         bubble = new ImageIcon("img/bubble.png");
-        bomb = new ImageIcon("img/bomb.png");
         left = false;
         right = false;
         up = false;
@@ -57,12 +48,10 @@ public class Bubble extends JLabel implements Moveable {
         x = player.getX();
         y = player.getY();
         setIcon(bubble);
-        //setIcon(bomb);
         setSize(50, 50);
         setLocation(x, y);
     }
 
-    // getter
     @Override
     public int getX() {
         return x;
@@ -93,7 +82,6 @@ public class Bubble extends JLabel implements Moveable {
         return player;
     }
 
-    // setter
     public void setX(int x) {
         this.x = x;
     }
@@ -125,13 +113,9 @@ public class Bubble extends JLabel implements Moveable {
     @Override
     public void left() {
         left = true;
-        for (int i = 0; i < 400; i++) {
+        for(int i =0; i <400; i++){
             x--;
-            setLocation(x, y);
-            if(backgroundBubbleService.leftWall() == true){
-                // 왼쪽 벽이다.
-                break;
-            }
+            setLocation(x,y);
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -144,13 +128,9 @@ public class Bubble extends JLabel implements Moveable {
     @Override
     public void right() {
         right = true;
-        for (int i = 0; i < 400; i++) {
+        for(int i =0; i <400; i++){
             x++;
-            // 좌표 오른쪽으로 1 움직였는데 오른쪽 벽인지 아닌지 매번 확인
-            setLocation(x, y);
-            if(backgroundBubbleService.rightWall() == true){
-                break;
-            }
+            setLocation(x,y);
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -163,33 +143,15 @@ public class Bubble extends JLabel implements Moveable {
     @Override
     public void up() {
         up = true;
-        while (true) {
+        while(true){
+            up = true;
             y--;
-            setLocation(x, y);
-            if(backgroundBubbleService.topWall() == true){
-                break;
-            }
+            setLocation(x,y);
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
-
-        // TODO 추후 수정 예정
-        // 3초 뒤에 이미지 변경해 보세요
-        try {
-            Thread.sleep(3000);
-            setIcon(bomb);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            Thread.sleep(500);
-            setIcon(null);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 }

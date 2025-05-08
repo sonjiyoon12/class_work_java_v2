@@ -1,4 +1,4 @@
-package bubble.test05;
+package _my_bubble.test05;
 
 import javax.swing.*;
 
@@ -21,15 +21,13 @@ public class Player extends JLabel implements Moveable {
     private boolean up;
     private boolean down;
 
-    // 벽에 충돌한 상태
+    // 벽애 충돌한 상태
     private boolean leftWallCrash;
     private boolean rightWallCrash;
 
-    // 플레이어 방향 상태 (enum 타입 사용법 1- 선언)
     private PlayerWay playerWay;
 
-    // PlayerWay - getter 만 생성
-    public PlayerWay getPlayerWay() {
+    public PlayerWay getPlayerWay(){
         return playerWay;
     }
 
@@ -153,8 +151,6 @@ public class Player extends JLabel implements Moveable {
 
     @Override
     public void left() {
-        // 클래스 이름으로 접근한다.
-        playerWay = PlayerWay.LEFT;
         left = true;
         setIcon(playerL);
         new Thread(new Runnable() {
@@ -175,7 +171,6 @@ public class Player extends JLabel implements Moveable {
 
     @Override
     public void right() {
-        playerWay = PlayerWay.RIGHT;
         right = true; // 움직인 상태 값 변경
         setIcon(playerR);
 
@@ -203,7 +198,7 @@ public class Player extends JLabel implements Moveable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 130 / JUMP_SPEED; i++) {
+                for (int i = 0; i < 130/JUMP_SPEED; i++) {
                     y = y - JUMP_SPEED;
                     setLocation(x, y);
                     try {
@@ -224,7 +219,7 @@ public class Player extends JLabel implements Moveable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 130 / JUMP_SPEED; i++) {
+                for (int i = 0; i < 130/JUMP_SPEED; i++) {
                     y = y + JUMP_SPEED;
                     setLocation(x, y);
                     try {

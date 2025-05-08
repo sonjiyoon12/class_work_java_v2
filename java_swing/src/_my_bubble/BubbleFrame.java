@@ -72,7 +72,6 @@ public class BubbleFrame extends JFrame {
                         player.setRight(false);
                         break;
                     case KeyEvent.VK_UP:
-
                         break;
                 }
             }
