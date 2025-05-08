@@ -9,6 +9,6 @@ public class Powder extends Material {
 
     @Override
     public void doPrinting() {
-        System.out.println("파우더를 사용해서 프린딩 ... ");
+        System.out.println("파우더를 사용해서 프린팅 ... ");
     }
 }
